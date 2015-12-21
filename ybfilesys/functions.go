@@ -11,7 +11,7 @@ package ybfilesys
 
 import (
 	"fmt"
-	"github.com/yieldbot/ybsensuplugin/util"
+	"github.com/yieldbot/ybsensuplugin/ybsensupluginutil"
 	"io/ioutil"
 	"os"
 	"os/exec"
@@ -28,7 +28,7 @@ func GetPid(app string) string {
 
 	/// the pid for the binary
 	goPid := os.Getpid()
-	if util.Debug {
+	if ybsensupluginutil.Debug {
 		fmt.Printf("golang binary pid: %v\n", goPid)
 	}
 
@@ -36,7 +36,7 @@ func GetPid(app string) string {
 
 	out, err := psAEF.Output()
 	if err != nil {
-		util.EHndlr(err)
+		ybsensupluginutil.EHndlr(err)
 	}
 
 	psAEF.Start()
@@ -65,7 +65,7 @@ func GetPid(app string) string {
 	if appPid == "" {
 		fmt.Printf("No process with the name " + app + " exists.\n")
 		fmt.Printf("If unsure consult the documentation for examples and requirements\n")
-		os.Exit(util.MonitoringErrorCodes["CONFIG_ERROR"])
+		os.Exit(ybsensupluginutil.MonitoringErrorCodes["CONFIG_ERROR"])
 	}
 	return appPid
 }
@@ -81,7 +81,7 @@ func GetFileHandles(pid string) (float64, float64, float64) {
 
 	limits, err := ioutil.ReadFile(filename)
 	if err != nil {
-		util.EHndlr(err)
+		ybsensupluginutil.EHndlr(err)
 	}
 
 	lines := strings.Split(string(limits), "\n")
@@ -93,12 +93,12 @@ func GetFileHandles(pid string) (float64, float64, float64) {
 
 			s, err = strconv.ParseFloat(_s, 64)
 			if err != nil {
-				util.EHndlr(err)
+				ybsensupluginutil.EHndlr(err)
 				os.Exit(2)
 			}
 			h, err = strconv.ParseFloat(_h, 64)
 			if err != nil {
-				util.EHndlr(err)
+				ybsensupluginutil.EHndlr(err)
 				os.Exit(2)
 			}
 		}
@@ -111,7 +111,7 @@ func GetFileHandles(pid string) (float64, float64, float64) {
 	if numFD == 0.0 {
 		fmt.Printf("There are no open file descriptors for the process, did you use sudo?\n")
 		fmt.Printf("If unsure of the use, consult the documentation for examples and requirements\n")
-		os.Exit(util.MonitoringErrorCodes["PERMISSION_ERROR"])
+		os.Exit(ybsensupluginutil.MonitoringErrorCodes["PERMISSION_ERROR"])
 	}
 	return s, h, numFD
 }

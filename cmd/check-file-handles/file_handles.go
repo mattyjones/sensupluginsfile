@@ -12,15 +12,9 @@ package main
 import (
 	"flag"
 	"fmt"
-	// "github.com/yieldbot/ybsensuplugin/check"
-	"github.com/yieldbot/ybsensuplugin/util"
+	"github.com/yieldbot/ybsensuplugin/ybsensupluginutil"
 	"github.com/yieldbot/ybsensupluginfile/ybfilesys"
-	// "io/ioutil"
 	"os"
-	// "os/exec"
-	// "regexp"
-	// "strconv"
-	// "strings"
 )
 
 // Calculate if the value is over a threshold
@@ -49,7 +43,7 @@ func main() {
 	app := *AppPtr
 	warnThreshold := *WarnPtr
 	critThreshold := *CritPtr
-	util.Debug = *DebugPtr
+	ybsensupluginutil.Debug = *DebugPtr
 	ybfilesys.JavaApp = *JavaAppPtr
 
 	var appPid string
@@ -58,7 +52,7 @@ func main() {
 	if app != "" {
 		appPid = ybfilesys.GetPid(app)
 		sLimit, hLimit, openFd = ybfilesys.GetFileHandles(appPid)
-		if util.Debug {
+		if ybsensupluginutil.Debug {
 			fmt.Printf("warning threshold: %v percent, critical threshold: %v percent\n", warnThreshold, critThreshold)
 			fmt.Printf("this is the number of open files at the specific point in time: %v\n", openFd)
 			fmt.Printf("app pid is: %v\n", appPid)
@@ -75,11 +69,11 @@ func main() {
 		} else {
 			fmt.Printf("There was an error calculating the thresholds. Check to make sure everything got convert to a float64.\n")
 			fmt.Printf("If unsure of the use, consult the documentation for examples and requirements\n")
-			os.Exit(util.MonitoringErrorCodes["RUNTIME_ERROR"])
+			os.Exit(ybsensupluginutil.MonitoringErrorCodes["RUNTIME_ERROR"])
 		}
 	} else {
 		fmt.Printf("Please enter a process name to check. \n")
 		fmt.Printf("If unsure consult the documentation for examples and requirements\n")
-		os.Exit(util.MonitoringErrorCodes["CONFIG_ERROR"])
+		os.Exit(ybsensupluginutil.MonitoringErrorCodes["CONFIG_ERROR"])
 	}
 }

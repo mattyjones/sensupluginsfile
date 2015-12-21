@@ -1,7 +1,7 @@
 {
   "coordinates": {
     "org": "ybsensupluginfile",
-    "name": "ybsensupluginfile",
+    "name": "check-file-handles",
     "type": "golang"
   },
   "build": [

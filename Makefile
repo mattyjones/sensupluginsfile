@@ -300,4 +300,5 @@ version_bump:
 
 # run go vet
 vet:
+	export PATH=$$PATH:$$GOROOT/bin:$$GOBIN; \
 	@go vet ./$(srcdir)/$(pkg)/*.go

@@ -10,7 +10,6 @@
 package ybfilesys
 
 import (
-	"flag"
 	"fmt"
 	"github.com/yieldbot/ybsensuplugin/util"
 	"io/ioutil"

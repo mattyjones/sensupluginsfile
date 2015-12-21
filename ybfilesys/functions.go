@@ -43,7 +43,7 @@ func GetPid(app string) string {
 
 	lines := strings.Split(string(out), "\n")
 
-	if !util.JavaApp {
+	if !JavaApp {
 		for i := range lines {
 			if !strings.Contains(lines[i], strconv.Itoa(goPid)) && !termExp.MatchString(lines[i]) {
 				words := strings.Split(lines[i], " ")

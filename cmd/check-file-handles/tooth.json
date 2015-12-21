@@ -1,11 +1,11 @@
 {
   "coordinates": {
-    "org": "ybsensues",
-    "name": "ybsensues",
+    "org": "ybsensupluginfile",
+    "name": "ybsensupluginfile",
     "type": "golang"
   },
   "build": [
-    "make -f ../../Makefile srcdir=../ repo=ybsensues pkg=handler-elasticsearch-status all"
+    "make -f ../../Makefile srcdir=../ repo=ybsensupluginfile pkg=check-file-handles all"
   ],
   "version": [
     "make -f ../../Makefile version"

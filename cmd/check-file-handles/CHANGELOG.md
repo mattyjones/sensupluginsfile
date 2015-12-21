@@ -3,9 +3,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachangelog.com/)
 
-## [Unreleased][unreleased]
+## Unreleased
 
-## 0.0.5 - 2015-12-09
+## 0.0.1 - 2015-12-21
 
 ### Added
 - initial internal stable release

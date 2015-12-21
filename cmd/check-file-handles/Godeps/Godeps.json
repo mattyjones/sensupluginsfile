@@ -1,0 +1,15 @@
+{
+	"ImportPath": "github.com/yieldbot/ybsensupluginfile/cmd/check-file-handles",
+	"GoVersion": "go1.5",
+	"Deps": [
+		{
+			"ImportPath": "github.com/yieldbot/ybsensuplugin/ybsensupluginutil",
+			"Comment": "v1.0.0-36-gb0923f2",
+			"Rev": "b0923f221a369b6de8c02cdc1426cc6e3a86d02c"
+		},
+		{
+			"ImportPath": "github.com/yieldbot/ybsensupluginfile/ybfilesys",
+			"Rev": "34a8cbce560364c4d9805da81c19260e74c53d71"
+		}
+	]
+}

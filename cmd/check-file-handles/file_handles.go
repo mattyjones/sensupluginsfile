@@ -12,15 +12,15 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/yieldbot/ybsensuplugin/check"
+	// "github.com/yieldbot/ybsensuplugin/check"
 	"github.com/yieldbot/ybsensuplugin/util"
 	"github.com/yieldbot/ybsensupluginfile/ybfilesys"
-	"io/ioutil"
+	// "io/ioutil"
 	"os"
-	"os/exec"
-	"regexp"
-	"strconv"
-	"strings"
+	// "os/exec"
+	// "regexp"
+	// "strconv"
+	// "strings"
 )
 
 // Calculate if the value is over a threshold
@@ -50,7 +50,7 @@ func main() {
 	warnThreshold := *WarnPtr
 	critThreshold := *CritPtr
 	util.Debug = *DebugPtr
-	util.JavaApp = *JavaAppPtr
+	ybfilesys.JavaApp = *JavaAppPtr
 
 	var appPid string
 	var sLimit, hLimit, openFd float64
@@ -75,11 +75,11 @@ func main() {
 		} else {
 			fmt.Printf("There was an error calculating the thresholds. Check to make sure everything got convert to a float64.\n")
 			fmt.Printf("If unsure of the use, consult the documentation for examples and requirements\n")
-			os.Exit(util.RUNTIME_ERROR)
+			os.Exit(util.MonitoringErrorCodes["RUNTIME_ERROR"])
 		}
 	} else {
 		fmt.Printf("Please enter a process name to check. \n")
 		fmt.Printf("If unsure consult the documentation for examples and requirements\n")
-		os.Exit(util.CONFIG_ERROR)
+		os.Exit(util.MonitoringErrorCodes["CONFIG_ERROR"])
 	}
 }

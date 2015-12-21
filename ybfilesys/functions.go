@@ -65,7 +65,7 @@ func GetPid(app string) string {
 	if appPid == "" {
 		fmt.Printf("No process with the name " + app + " exists.\n")
 		fmt.Printf("If unsure consult the documentation for examples and requirements\n")
-		os.Exit(util.CONFIG_ERROR)
+		os.Exit(util.MonitoringErrorCodes["CONFIG_ERROR"])
 	}
 	return appPid
 }
@@ -111,7 +111,7 @@ func GetFileHandles(pid string) (float64, float64, float64) {
 	if numFD == 0.0 {
 		fmt.Printf("There are no open file descriptors for the process, did you use sudo?\n")
 		fmt.Printf("If unsure of the use, consult the documentation for examples and requirements\n")
-		os.Exit(util.PERMISSION_ERROR)
+		os.Exit(util.MonitoringErrorCodes["PERMISSION_ERROR"])
 	}
 	return s, h, numFD
 }

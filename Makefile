@@ -2,7 +2,7 @@ SHELL = /bin/sh
 
 # This is a general purpose Makefile for building golang projects
 #
-# version 0.0.9
+# version 0.0.10
 # Copyright (c) 2015 Yieldbot
 
 .PHONY: all build bump_version clean coverage dist format info install lint maintainer-clean test test_all updatedeps version vet
@@ -249,15 +249,12 @@ pre-build:
 	else \
 	  echo "No binaries were found. No bin directory will be created"; \
 	fi; \
-	if [ -e $$GOPATH/src/github.com/yieldbot/ybsensupluginfile/Makefile ]; then \
-	  echo "Correct dependency directory structure already exists, doing nothing"; \
-	else \
-		echo "Creating proper build environment and dependency directory structure"; \
-		echo "Creating $$GOPATH/src/github.com/yieldbot/ybsensupluginfile"; \
-		mkdir -p $$GOPATH/src/github.com/yieldbot/ybsensupluginfile; \
-		echo "Copying dependencies from $$(pwd) -> $$GOPATH/src/github.com/yieldbot/ybsensupluginfile"; \
-		cp -R ../../* $$GOPATH/src/github.com/yieldbot/ybsensupluginfile; \
-	fi; \
+
+	echo "Creating proper build environment and dependency directory structure"; \
+	echo "Creating $$GOPATH/src/github.com/yieldbot/ybsensupluginfile"; \
+	mkdir -p $$GOPATH/src/github.com/yieldbot/ybsensupluginfile; \
+	echo "Copying dependencies from $$(pwd) -> $$GOPATH/src/github.com/yieldbot/ybsensupluginfile"; \
+	cp -R ../../* $$GOPATH/src/github.com/yieldbot/ybsensupluginfile; \
 
 pre-dist:
 	@if [ -e ../../cmd/$(pkg) ]; then \

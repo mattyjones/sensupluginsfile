@@ -49,7 +49,7 @@ func main() {
 	var appPid string
 	var sLimit, hLimit, openFd float64
 
-	// need to find a way to get the printf stuff into the sensu exit function
+  // need to find a way to get the printf stuff into the sensu exit function
 	if app != "" {
 		appPid = ybfilesys.GetPid(app)
 		sLimit, hLimit, openFd = ybfilesys.GetFileHandles(appPid)
@@ -70,11 +70,11 @@ func main() {
 		} else {
 			fmt.Printf("There was an error calculating the thresholds. Check to make sure everything got convert to a float64.\n")
 			fmt.Printf("If unsure of the use, consult the documentation for examples and requirements\n")
-			ybsensupluginutil.Exit("unknown") //42
+			ybsensupluginutil.Exit(42)
 		}
 	} else {
 		fmt.Printf("Please enter a process name to check. \n")
 		fmt.Printf("If unsure consult the documentation for examples and requirements\n")
-		ybsensupluginutil.Exit("unknown") //127
+		ybsensupluginutil.Exit(127)
 	}
 }

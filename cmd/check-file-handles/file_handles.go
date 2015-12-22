@@ -12,7 +12,7 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/yieldbot/ybsensupluginfile/Godeps/_workspace/src/github.com/yieldbot/ybsensuplugin/ybsensupluginutil"
+	"github.com/yieldbot/ybsensuplugin/ybsensupluginutil"
 	"github.com/yieldbot/ybsensupluginfile/ybfilesys"
 	// "os"
 )
@@ -58,14 +58,14 @@ func main() {
 			fmt.Printf("app pid is: %v\n", appPid)
 			fmt.Printf("This is the soft limit: %v\n", sLimit)
 			fmt.Printf("This is the hard limit: %v\n", hLimit)
-			ybsensupluginutil.Exit(0)
+			ybsensupluginutil.Exit("ok")
 		}
 		if determineThreshold(hLimit, float64(critThreshold), openFd) {
 			fmt.Printf("%v is over %v percent of the the open file handles hard limit of %v\n", app, critThreshold, hLimit)
-			ybsensupluginutil.Exit(2)
+			ybsensupluginutil.Exit("critical")
 		} else if determineThreshold(sLimit, float64(warnThreshold), openFd) {
 			fmt.Printf("%v is over %v percent of the open file handles soft limit of %v\n", app, warnThreshold, sLimit)
-			ybsensupluginutil.Exit(1)
+			ybsensupluginutil.Exit("warning")
 		} else {
 			fmt.Printf("There was an error calculating the thresholds. Check to make sure everything got convert to a float64.\n")
 			fmt.Printf("If unsure of the use, consult the documentation for examples and requirements\n")

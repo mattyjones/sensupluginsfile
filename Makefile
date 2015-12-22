@@ -291,8 +291,6 @@ version:
 
 # bump the version of the project
 version_bump:
-	date > matty_date;\
-	cat matty_date
 	ver=$$(awk '{ print $$NF }' $(pkg)/version | awk -F. '{ print $$NF }'); \
 	ver=$$(($$ver+1)); \
 	echo "version 0.0.$$ver" > $(pkg)/version

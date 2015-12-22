@@ -254,7 +254,7 @@ pre-build:
 	echo "Creating $$GOPATH/src/github.com/yieldbot/ybsensupluginfile"; \
 	mkdir -p $$GOPATH/src/github.com/yieldbot/ybsensupluginfile; \
 	echo "Copying dependencies from $$(pwd) -> $$GOPATH/src/github.com/yieldbot/ybsensupluginfile"; \
-	cp -R ../../* $$GOPATH/src/github.com/yieldbot/ybsensupluginfile; \
+	#cp -R ../../* $$GOPATH/src/github.com/yieldbot/ybsensupluginfile; \
 
 pre-dist:
 	@if [ -e ../../cmd/$(pkg) ]; then \

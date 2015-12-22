@@ -1,0 +1,11 @@
+{
+	"ImportPath": "github.com/yieldbot/ybsensupluginfile/cmd/check-file-size",
+	"GoVersion": "go1.5",
+	"Deps": [
+		{
+			"ImportPath": "github.com/yieldbot/ybsensuplugin/ybsensupluginutil",
+			"Comment": "v1.0.0-46-g3532566",
+			"Rev": "35325667ec0a8e29285b4374856b3c755c86d36c"
+		}
+	]
+}

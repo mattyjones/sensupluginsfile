@@ -70,11 +70,11 @@ func main() {
 		} else {
 			fmt.Printf("There was an error calculating the thresholds. Check to make sure everything got convert to a float64.\n")
 			fmt.Printf("If unsure of the use, consult the documentation for examples and requirements\n")
-			ybsensupluginutil.Exit(42)
+			ybsensupluginutil.Exit("unknown") //42
 		}
 	} else {
 		fmt.Printf("Please enter a process name to check. \n")
 		fmt.Printf("If unsure consult the documentation for examples and requirements\n")
-		ybsensupluginutil.Exit(127)
+		ybsensupluginutil.Exit("unknown") //127
 	}
 }

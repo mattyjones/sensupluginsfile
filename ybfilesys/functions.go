@@ -11,7 +11,7 @@ package ybfilesys
 
 import (
 	"fmt"
-	"github.com/yieldbot/ybsensupluginfile/ybfilesys/Godeps/_workspace/src/github.com/yieldbot/ybsensuplugin/ybsensupluginutil"
+	"github.com/yieldbot/ybsensupluginfile/Godeps/_workspace/src/github.com/yieldbot/ybsensuplugin/ybsensupluginutil"
 	"io/ioutil"
 	"os"
 	"os/exec"

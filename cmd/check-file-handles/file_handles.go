@@ -14,9 +14,10 @@ import (
 	"fmt"
 	"github.com/yieldbot/ybsensupluginfile/cmd/check-file-handles/Godeps/_workspace/src/github.com/yieldbot/ybsensuplugin/ybsensupluginutil"
 	"github.com/yieldbot/ybsensupluginfile/cmd/check-file-handles/Godeps/_workspace/src/github.com/yieldbot/ybsensupluginfile/ybfilesys"
-)
+m)
 
 // Calculate if the value is over a threshold
+//
 func determineThreshold(limit float64, threshold float64, numFD float64) bool {
 	alarm := true
 	tLimit := threshold / float64(100) * limit

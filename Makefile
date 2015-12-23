@@ -28,44 +28,13 @@ endif
 # Set the src directory. You can overwrite this by setting your build command
 # to `make srcdir=path build`
 ifndef srcdir
-srcdir = cmd
-endif
-
-# Set the default os/arch to build for. Specify additional values in a space
-# seperated array. To overwrite this use
-# `make osarch="linux/amd64 linux/386" build`
-ifndef osarch
-osarch = linux/amd64
+srcdir = ../
 endif
 
 # Set the base package location.
 # `make pkgbase="yieldbot" build
 ifndef pkgbase
 pkgbase = github.com
-endif
-
-# Set the repo to look for the package in. Specify additional values in a space
-# separated array. To overwrite this use
-# `make repo="diemon bobogono" build`
-ifndef repo
-repo := $(shell pwd | awk -F/ '{ print $$NF }')
-endif
-
-# Set the name of the output file. If using only a single os/arch the name
-# will be as given. If multiple os/arch combinations are used then the given
-# name will be suffixed with _OS_ARCH.
-ifndef out
-	ifeq ("$(osarch)","linux/amd64")
-		output = ../../bin/$(pkg)/$(pkg)
-	else
-			output = ../../bin/$(pkg)/$(pkg)_{{.OS}}_{{.Arch}}
-	endif
-else
-	ifeq ("$(osarch)","linux/amd64")
-		output = ../../bin/$(pkg)/$(out)
-	else
-			output = ../../bin/$(pkg)/$(out)_{{.OS}}_{{.Arch}}
-	endif
 endif
 
 # Set the path that the tarball will be dropped into. DrTeeth will look in
@@ -134,28 +103,15 @@ test-all: Run all optional testing targets.
 infodir Set the location for installing GNU info files.
         Default: /usr/local/share/info
 
-pkg Set the package to build. Specify additional values in a space seperated
-        array. Ex. `make pkg="diemon bobogono" build`
+pkg Set the package to build. Ex. `make pkg="bobogono" build`
         Default: .
 
 srcdir Set the src directory.
-       Default: src
-
-osarch Set the default os/arch to build for. Specify additional values in a space
-       seperated array. Ex. `make osarch="linux/amd64 linux/386" build`
-       Default: linux/amd64
+       Default: ../
 
 pkgbase Set the base package location.
         Ex. `make pkgbase="github.com/yieldbot"` build
         Default: github.com
-
-repo Set the repo to look for the package in. Specify additional values in a space
-     seperated array. Ex. `make repo="diemon bobogono" build`
-     Default: The top level directory
-
-out  Set the name of the output file. If using only a single os/arch the name
-     will be as given. If multiple os/arch combinations are used then the given
-     name will be suffixed with _OS_ARCH.
 
 target Set the path that the tarball will be dropped into. DrTeeth will look in
        ./target by default but golang will put it into ./pkg if left to itself.
@@ -176,10 +132,9 @@ all: format build dist
 
 # Build a binary from the given package and drop it into the local bin
 build: pre-build
-	@for i in $$(echo $(pkg)); do \
 	  export PATH=$$PATH:$$GOROOT/bin:$$GOBIN; \
-  	gox -parallel=1 -osarch="$(osarch)" -output=$(output) ./$(srcdir)/$$i; \
-  done; \
+	  godep go build
+	  mv $(pkg) ../../bin/$(pkg)/$(pkg)
 
 # delete all existing binaries and directories used for building
 clean:
@@ -239,8 +194,6 @@ maintainer-clean:
 	@echo "this needs to be implemented"
 
 # create a directory to store binaries in
-# YELLOW need to account for updated packages
-# YELLOW need to set the repo name automatically
 pre-build:
 	@if [ -e ../../cmd/$(pkg) ]; then \
 		echo "Ensuring output binary directory exists"; \
@@ -288,12 +241,6 @@ version:
 	else \
 		@echo "No version file found"; \
 	fi; \
-
-# # bump the version of the project
-# version_bump:
-# 	ver=$$(awk '{ print $$NF }' $(pkg)/version | awk -F. '{ print $$NF }'); \
-# 	ver=$$(($$ver+1)); \
-# 	echo "version 0.0.$$ver" > $(pkg)/version
 
 # run go vet
 vet:

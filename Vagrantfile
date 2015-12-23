@@ -41,10 +41,7 @@ chmod 600 /home/vagrant/.ssh/config
 go get github.com/axw/gocov/gocov
 go get -u github.com/golang/lint/golint
 go get github.com/tools/godep
-go get github.com/mitchellh/gox
-sudo apt-add-repository ppa:brightbox/ruby-ng
-sudo apt-get update
-sudo apt-get install ruby2.2
+# go get github.com/mitchellh/gox
 cat << 'EOF' >> /home/vagrant/.ssh/config
 StrictHostKeyChecking no
 EOF

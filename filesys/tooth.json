@@ -1,11 +1,11 @@
 {
   "coordinates": {
     "org": "ybsensupluginfile",
-    "name": "ybfilesys",
+    "name": "filesys",
     "type": "golang"
   },
   "build": [
-    "make -f ../Makefile srcdir=../ repo=ybsensupluginfile pkg=ybfilesys all"
+    "make -f ../Makefile srcdir=../ repo=sensupluginfile pkg=filesys all"
   ],
   "version": [
     "make -f ../Makefile version"

@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/yieldbot/ybsensupluginfile/cmd/check-file-size/Godeps/_workspace/src/github.com/yieldbot/ybsensuplugin/ybsensupluginutil"
+	"github.com/yieldbot/ybsensuplugin/ybsensupluginutil"
 	"os"
 	"path/filepath"
 )

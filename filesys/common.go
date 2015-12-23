@@ -6,7 +6,7 @@
 //   Released under the MIT License; see LICENSE
 //   for details.
 
-package ybfilesys
+package filesys
 
 // JavaApp  This is used to let the process -> pid function know how it will match the process name
 var JavaApp bool

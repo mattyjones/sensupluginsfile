@@ -12,8 +12,8 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/yieldbot/ybsensupluginfile/cmd/check-file-handles/Godeps/_workspace/src/github.com/yieldbot/ybsensuplugin/ybsensupluginutil"
-	"github.com/yieldbot/ybsensupluginfile/cmd/check-file-handles/Godeps/_workspace/src/github.com/yieldbot/ybsensupluginfile/ybfilesys"
+	"github.com/yieldbot/ybsensuplugin/ybsensupluginutil"
+	"github.com/yieldbot/ybsensupluginfile/filesys"
 )
 
 // Calculate if the value is over a threshold

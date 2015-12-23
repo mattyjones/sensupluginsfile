@@ -50,8 +50,6 @@ func main() {
 	var sLimit, hLimit, openFd float64
 
 	// need to find a way to get the printf stuff into the sensu exit function
-	//
-	//
 	if app != "" {
 		appPid = ybfilesys.GetPid(app)
 		sLimit, hLimit, openFd = ybfilesys.GetFileHandles(appPid)

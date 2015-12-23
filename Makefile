@@ -134,7 +134,12 @@ all: format build dist
 build: pre-build
 	  export PATH=$$PATH:$$GOROOT/bin:$$GOBIN; \
 	  godep go build
-	  mv $(pkg) ../../bin/$(pkg)/$(pkg)
+
+	  if [ -e $(pkg) ]; then \
+      mv $(pkg) ../../bin/$(pkg)/$(pkg); \
+	  else \
+	    echo "No binaries were found. No files need to be moved"; \
+	  fi; \
 
 # delete all existing binaries and directories used for building
 clean:

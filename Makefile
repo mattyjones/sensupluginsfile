@@ -251,10 +251,10 @@ pre-build:
 	fi; \
 
 	echo "Creating proper build environment and dependency directory structure"; \
-	echo "Creating $$GOPATH/src/github.com/yieldbot/ybsensupluginfile"; \
-	mkdir -p $$GOPATH/src/github.com/yieldbot/ybsensupluginfile; \
-	echo "Copying dependencies from $$(pwd) -> $$GOPATH/src/github.com/yieldbot/ybsensupluginfile"; \
-	cp -R ../../* $$GOPATH/src/github.com/yieldbot/ybsensupluginfile; \
+	echo "Creating $$GOPATH/src/github.com/yieldbot/sensupluginfile"; \
+	mkdir -p $$GOPATH/src/github.com/yieldbot/sensupluginfile; \
+	echo "Copying dependencies from $$(pwd) -> $$GOPATH/src/github.com/yieldbot/sensupluginfile"; \
+	cp -R ../../* $$GOPATH/src/github.com/yieldbot/sensupluginfile; \
 
 pre-dist:
 	@if [ -e ../../cmd/$(pkg) ]; then \
@@ -286,14 +286,14 @@ version:
 		ver=$$(awk '{ print $$NF }' $(pkg)/version) ;\
     echo "{\"version\":\"$$ver\"}"; \
 	else \
-		@echo "No version file found in the project root"; \
+		@echo "No version file found"; \
 	fi; \
 
-# bump the version of the project
-version_bump:
-	ver=$$(awk '{ print $$NF }' $(pkg)/version | awk -F. '{ print $$NF }'); \
-	ver=$$(($$ver+1)); \
-	echo "version 0.0.$$ver" > $(pkg)/version
+# # bump the version of the project
+# version_bump:
+# 	ver=$$(awk '{ print $$NF }' $(pkg)/version | awk -F. '{ print $$NF }'); \
+# 	ver=$$(($$ver+1)); \
+# 	echo "version 0.0.$$ver" > $(pkg)/version
 
 # run go vet
 vet:

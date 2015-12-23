@@ -11,7 +11,7 @@ package filesys
 
 import (
 	"fmt"
-	"github.com/yieldbot/ybsensuplugin/ybsensupluginutil"
+	"github.com/yieldbot/sensuplugin/ybsensupluginutil"
 	"io/ioutil"
 	"os"
 	"os/exec"

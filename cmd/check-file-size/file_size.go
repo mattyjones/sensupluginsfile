@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/yieldbot/ybsensuplugin/ybsensupluginutil"
+	"github.com/yieldbot/sensuplugin/ybsensupluginutil"
 	"os"
 	"path/filepath"
 )

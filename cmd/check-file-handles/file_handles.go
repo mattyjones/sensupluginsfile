@@ -12,8 +12,8 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/yieldbot/ybsensuplugin/ybsensupluginutil"
-	"github.com/yieldbot/ybsensupluginfile/filesys"
+	"github.com/yieldbot/sensuplugin/ybsensupluginutil"
+	"github.com/yieldbot/sensupluginfile/filesys"
 )
 
 // Calculate if the value is over a threshold
@@ -43,15 +43,15 @@ func main() {
 	warnThreshold := *WarnPtr
 	critThreshold := *CritPtr
 	ybsensupluginutil.Debug = *DebugPtr
-	ybfilesys.JavaApp = *JavaAppPtr
+	filesys.JavaApp = *JavaAppPtr
 
 	var appPid string
 	var sLimit, hLimit, openFd float64
 
 	// need to find a way to get the printf stuff into the sensu exit function
 	if app != "" {
-		appPid = ybfilesys.GetPid(app)
-		sLimit, hLimit, openFd = ybfilesys.GetFileHandles(appPid)
+		appPid = filesys.GetPid(app)
+		sLimit, hLimit, openFd = filesys.GetFileHandles(appPid)
 		if ybsensupluginutil.Debug {
 			fmt.Printf("warning threshold: %v percent, critical threshold: %v percent\n", warnThreshold, critThreshold)
 			fmt.Printf("this is the number of open files at the specific point in time: %v\n", openFd)

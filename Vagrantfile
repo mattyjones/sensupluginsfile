@@ -1,7 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-# version 0.0.6
+# version 0.0.8
 
 # Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
 VAGRANTFILE_API_VERSION = '2'
@@ -53,7 +53,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.hostname = 'ybsensupluginfile'
 
   config.vm.provision 'shell', inline: $script, privileged: false
-  config.vm.synced_folder '.', '/opt/gopath/src/github.com/yieldbot/ybsensupluginfile'
+  config.vm.synced_folder '.', '/opt/gopath/src/github.com/yieldbot/sensupluginfile'
   config.ssh.forward_agent = true
 
   config.vm.provider :virtualbox do |vb|

@@ -1,0 +1,11 @@
+{
+	"ImportPath": "github.com/yieldbot/sensupluginfile/filesys",
+	"GoVersion": "go1.5",
+	"Deps": [
+		{
+			"ImportPath": "github.com/yieldbot/sensuplugin/ybsensupluginutil",
+			"Comment": "v1.0.0-48-g810973e",
+			"Rev": "810973ec2f2553785b634249ae05075f6b0561ef"
+		}
+	]
+}

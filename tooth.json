@@ -5,7 +5,7 @@
     "type": "golang"
   },
   "build": [
-    "make all"
+    "make build"
   ],
   "version": [
     "make version"

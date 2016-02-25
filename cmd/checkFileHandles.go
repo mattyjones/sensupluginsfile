@@ -32,8 +32,11 @@ var app string
 var warnThreshold int
 var critThreshold int
 
-var Timer *nitro.B
+var timer *nitro.B
 var debug bool
+
+// JavaApp is used in determining the pid. The match needs to be done differently
+// for Java apps.
 var JavaApp = filesys.JavaApp
 
 func determineThreshold(limit float64, threshold float64, numFD float64) bool {
@@ -74,19 +77,19 @@ to quickly create a Cobra application.`,
 				fmt.Printf("app pid is: %v\n", appPid)
 				fmt.Printf("This is the soft limit: %v\n", sLimit)
 				fmt.Printf("This is the hard limit: %v\n", hLimit)
-				Timer.Step("exit debug")
+				timer.Step("exit debug")
 				sensuutil.Exit("debug")
 			}
 			if determineThreshold(hLimit, float64(critThreshold), openFd) {
 				fmt.Printf("%v is over %v percent of the the open file handles hard limit of %v\n", app, critThreshold, hLimit)
-				Timer.Step("exit critical")
+				timer.Step("exit critical")
 				sensuutil.Exit("critical")
 			} else if determineThreshold(sLimit, float64(warnThreshold), openFd) {
 				fmt.Printf("%v is over %v percent of the open file handles soft limit of %v\n", app, warnThreshold, sLimit)
-				Timer.Step("exit warning")
+				timer.Step("exit warning")
 				sensuutil.Exit("warning")
 			} else {
-				Timer.Step("exit ok")
+				timer.Step("exit ok")
 				sensuutil.Exit("ok", "I'd far rather be happy than right any day")
 			}
 		} else {
@@ -99,7 +102,7 @@ to quickly create a Cobra application.`,
 }
 
 func init() {
-	Timer = nitro.Initalize()
+	timer = nitro.Initalize()
 
 	RootCmd.AddCommand(checkFileHandlesCmd)
 

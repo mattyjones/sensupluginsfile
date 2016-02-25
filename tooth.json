@@ -1,0 +1,16 @@
+{
+  "coordinates": {
+    "org": "sensupluginfile",
+    "name": "sensupluginfile",
+    "type": "golang"
+  },
+  "build": [
+    "make all"
+  ],
+  "version": [
+    "make version"
+  ],
+  "clean": [
+    "make clean"
+  ]
+}

@@ -23,6 +23,7 @@ package cmd
 import (
 	"fmt"
 	"github.com/spf13/cobra"
+	"github.com/spf13/nitro"
 	"github.com/yieldbot/sensuplugin/sensuutil"
 	"github.com/yieldbot/sensupluginfile/filesys"
 )
@@ -31,8 +32,8 @@ var app string
 var warnThreshold int
 var critThreshold int
 
-// var sensuutil.Debug = *DebugPtr
-var Debug bool
+var Timer *nitro.B
+var debug bool
 var JavaApp = filesys.JavaApp
 
 func determineThreshold(limit float64, threshold float64, numFD float64) bool {
@@ -67,24 +68,29 @@ to quickly create a Cobra application.`,
 		if app != "" {
 			appPid = filesys.GetPid(app)
 			sLimit, hLimit, openFd = filesys.GetFileHandles(appPid)
-			if Debug {
+			if debug {
 				fmt.Printf("warning threshold: %v percent, critical threshold: %v percent\n", warnThreshold, critThreshold)
 				fmt.Printf("this is the number of open files at the specific point in time: %v\n", openFd)
 				fmt.Printf("app pid is: %v\n", appPid)
 				fmt.Printf("This is the soft limit: %v\n", sLimit)
 				fmt.Printf("This is the hard limit: %v\n", hLimit)
+				Timer.Step("exit debug")
 				sensuutil.Exit("debug")
 			}
 			if determineThreshold(hLimit, float64(critThreshold), openFd) {
 				fmt.Printf("%v is over %v percent of the the open file handles hard limit of %v\n", app, critThreshold, hLimit)
+				Timer.Step("exit critical")
 				sensuutil.Exit("critical")
 			} else if determineThreshold(sLimit, float64(warnThreshold), openFd) {
 				fmt.Printf("%v is over %v percent of the open file handles soft limit of %v\n", app, warnThreshold, sLimit)
+				Timer.Step("exit warning")
 				sensuutil.Exit("warning")
 			} else {
-				sensuutil.Exit("warning", "I'd far rather be happy than right any day")
+				Timer.Step("exit ok")
+				sensuutil.Exit("ok", "I'd far rather be happy than right any day")
 			}
 		} else {
+
 			fmt.Printf("Please enter a process name to check. \n")
 			fmt.Printf("If unsure consult the documentation for examples and requirements\n")
 			sensuutil.Exit("configerror")
@@ -93,6 +99,7 @@ to quickly create a Cobra application.`,
 }
 
 func init() {
+	Timer = nitro.Initalize()
 
 	RootCmd.AddCommand(checkFileHandlesCmd)
 
@@ -101,16 +108,6 @@ func init() {
 	checkFileHandlesCmd.Flags().IntVarP(&warnThreshold, "warn", "", 75, "the alert warning threshold percentage")
 	checkFileHandlesCmd.Flags().IntVarP(&critThreshold, "crit", "", 75, "the alert critical threshold percentage")
 	checkFileHandlesCmd.Flags().BoolVarP(&JavaApp, "java", "", false, "java apps process detection is different")
-	checkFileHandlesCmd.Flags().BoolVarP(&Debug, "debug", "", false, "print debugging info instead of an alert")
-
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// checkFileHandlesCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// checkFileHandlesCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
-
+	checkFileHandlesCmd.Flags().BoolVarP(&debug, "debug", "", false, "print debugging info instead of an alert")
+	checkFileHandlesCmd.Flags().BoolVar(&nitro.AnalysisOn, "stepAnalysis", false, "display memory and timing of different steps of the program")
 }

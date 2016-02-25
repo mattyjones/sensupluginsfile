@@ -143,7 +143,7 @@ build: pre-build
 	  godep go build --ldflags "-linkmode external X main.version=$(VER) -extldflags '-static'"
 
 	  if [ -e $(pkg) ]; then \
-      mv $(pkg) ../../bin/$(pkg)/$(pkg); \
+      mv $(pkg) ./bin/$(pkg)/$(pkg); \
 	  else \
 	    echo "No binaries were found. No files need to be moved"; \
 	  fi; \
@@ -164,8 +164,8 @@ dep_tree: updatedeps
 # pack everything up neatly
 dist: build pre-dist
 	@if [ -e ../../cmd/$(pkg) ]; then \
-    cd ../../bin/$(pkg); \
-	  tar czvf ../../$(targetdir)/output.tar.gz *; \
+    cd ./bin/$(pkg); \
+	  tar czvf ./$(targetdir)/output.tar.gz *; \
 	else \
 	  echo "No binaries were found. No output package will be created"; \
 	fi; \
@@ -212,25 +212,25 @@ maintainer-clean:
 
 # create a directory to store binaries in
 pre-build:
-	@if [ -e ../../cmd/$(pkg) ]; then \
+	@if [ -e ./cmd/$(pkg) ]; then \
 		echo "Ensuring output binary directory exists"; \
 		echo "Creating ../../bin/$(pkg)"; \
-		mkdir -p ../../bin/$(pkg); \
+		mkdir -p ./bin/$(pkg); \
 	else \
 	  echo "No binaries were found. No bin directory will be created"; \
 	fi; \
 
-	echo "Creating proper build environment and dependency directory structure"; \
-	echo "Creating $$GOPATH/src/github.com/yieldbot/sensupluginfile"; \
-	mkdir -p $$GOPATH/src/github.com/yieldbot/sensupluginfile; \
-	echo "Copying dependencies from $$(pwd) -> $$GOPATH/src/github.com/yieldbot/sensupluginfile"; \
-	cp -R ../../* $$GOPATH/src/github.com/yieldbot/sensupluginfile; \
+	# echo "Creating proper build environment and dependency directory structure"; \
+	# echo "Creating $$GOPATH/src/github.com/yieldbot/sensupluginfile"; \
+	# mkdir -p $$GOPATH/src/github.com/yieldbot/sensupluginfile; \
+	# echo "Copying dependencies from $$(pwd) -> $$GOPATH/src/github.com/yieldbot/sensupluginfile"; \
+	# cp -R ../../* $$GOPATH/src/github.com/yieldbot/sensupluginfile; \
 
 pre-dist:
-	@if [ -e ../../cmd/$(pkg) ]; then \
+	@if [ -e ./cmd/$(pkg) ]; then \
 		echo "Ensuring output tarball directory exists"; \
 		echo "Creating ../../$(targetdir)"; \
-	  mkdir -p ../../$(targetdir); \
+	  mkdir -p ./$(targetdir); \
 	else \
 	  echo "No binaries were found. No output directory will be created"; \
 	fi; \

@@ -22,17 +22,18 @@ package cmd
 
 import (
 	"fmt"
-  "github.com/yieldbot/sensuplugin/sensuutil"
-	"github.com/yieldbot/sensupluginfile/filesys"
 	"github.com/spf13/cobra"
+	"github.com/yieldbot/sensuplugin/sensuutil"
+	"github.com/yieldbot/sensupluginfile/filesys"
 )
 
 var app string
-	var warnThreshold int
-	var critThreshold int
-	// var sensuutil.Debug = *DebugPtr
-	var Debug bool
-	var JavaApp = filesys.JavaApp
+var warnThreshold int
+var critThreshold int
+
+// var sensuutil.Debug = *DebugPtr
+var Debug bool
+var JavaApp = filesys.JavaApp
 
 func determineThreshold(limit float64, threshold float64, numFD float64) bool {
 	alarm := true
@@ -43,6 +44,7 @@ func determineThreshold(limit float64, threshold float64, numFD float64) bool {
 	} else {
 		alarm = false
 	}
+	// fmt.Printf("alarm: %v\n", alarm)
 	return alarm
 }
 
@@ -58,43 +60,39 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 
-	var appPid string
-	var sLimit, hLimit, openFd float64
+		var appPid string
+		var sLimit, hLimit, openFd float64
 
-	// need to find a way to get the printf stuff into the sensu exit function
-	if app != "" {
-		appPid = filesys.GetPid(app)
-		sLimit, hLimit, openFd = filesys.GetFileHandles(appPid)
-		if Debug {
-			fmt.Printf("warning threshold: %v percent, critical threshold: %v percent\n", warnThreshold, critThreshold)
-			fmt.Printf("this is the number of open files at the specific point in time: %v\n", openFd)
-			fmt.Printf("app pid is: %v\n", appPid)
-			fmt.Printf("This is the soft limit: %v\n", sLimit)
-			fmt.Printf("This is the hard limit: %v\n", hLimit)
-			sensuutil.Exit("ok")
-		}
-		if determineThreshold(hLimit, float64(critThreshold), openFd) {
-			fmt.Printf("%v is over %v percent of the the open file handles hard limit of %v\n", app, critThreshold, hLimit)
-			sensuutil.Exit("critical")
-		} else if determineThreshold(sLimit, float64(warnThreshold), openFd) {
-			fmt.Printf("%v is over %v percent of the open file handles soft limit of %v\n", app, warnThreshold, sLimit)
-			sensuutil.Exit("warning")
+		// need to find a way to get the printf stuff into the sensu exit function
+		if app != "" {
+			appPid = filesys.GetPid(app)
+			sLimit, hLimit, openFd = filesys.GetFileHandles(appPid)
+			if Debug {
+				fmt.Printf("warning threshold: %v percent, critical threshold: %v percent\n", warnThreshold, critThreshold)
+				fmt.Printf("this is the number of open files at the specific point in time: %v\n", openFd)
+				fmt.Printf("app pid is: %v\n", appPid)
+				fmt.Printf("This is the soft limit: %v\n", sLimit)
+				fmt.Printf("This is the hard limit: %v\n", hLimit)
+				sensuutil.Exit("debug")
+			}
+			if determineThreshold(hLimit, float64(critThreshold), openFd) {
+				fmt.Printf("%v is over %v percent of the the open file handles hard limit of %v\n", app, critThreshold, hLimit)
+				sensuutil.Exit("critical")
+			} else if determineThreshold(sLimit, float64(warnThreshold), openFd) {
+				fmt.Printf("%v is over %v percent of the open file handles soft limit of %v\n", app, warnThreshold, sLimit)
+				sensuutil.Exit("warning")
+			} else {
+				sensuutil.Exit("warning", "I'd far rather be happy than right any day")
+			}
 		} else {
-			fmt.Printf("There was an error calculating the thresholds. Check to make sure everything got converted to a float64.\n")
-			fmt.Printf("If unsure of the use, consult the documentation for examples and requirements\n")
-			sensuutil.Exit("runtimeerror")
+			fmt.Printf("Please enter a process name to check. \n")
+			fmt.Printf("If unsure consult the documentation for examples and requirements\n")
+			sensuutil.Exit("configerror")
 		}
-	} else {
-		fmt.Printf("Please enter a process name to check. \n")
-		fmt.Printf("If unsure consult the documentation for examples and requirements\n")
-		sensuutil.Exit("configerror")
-	}
-		fmt.Println("checkFileHandles called")
 	},
 }
 
 func init() {
-
 
 	RootCmd.AddCommand(checkFileHandlesCmd)
 
@@ -104,7 +102,7 @@ func init() {
 	checkFileHandlesCmd.Flags().IntVarP(&critThreshold, "crit", "", 75, "the alert critical threshold percentage")
 	checkFileHandlesCmd.Flags().BoolVarP(&JavaApp, "java", "", false, "java apps process detection is different")
 	checkFileHandlesCmd.Flags().BoolVarP(&Debug, "debug", "", false, "print debugging info instead of an alert")
-  
+
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command

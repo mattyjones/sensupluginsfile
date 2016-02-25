@@ -94,12 +94,12 @@ func GetFileHandles(pid string) (float64, float64, float64) {
 			s, err = strconv.ParseFloat(_s, 64)
 			if err != nil {
 				sensuutil.EHndlr(err)
-				os.Exit(2)
+				sensuutil.Exit("warning", "I can't parse the soft limit")
 			}
 			h, err = strconv.ParseFloat(_h, 64)
 			if err != nil {
 				sensuutil.EHndlr(err)
-				os.Exit(2)
+				sensuutil.Exit("warning", "I can't parse the hard limit")
 			}
 		}
 	}
@@ -111,7 +111,10 @@ func GetFileHandles(pid string) (float64, float64, float64) {
 	if numFD == 0.0 {
 		fmt.Printf("There are no open file descriptors for the process, did you use sudo?\n")
 		fmt.Printf("If unsure of the use, consult the documentation for examples and requirements\n")
-		os.Exit(sensuutil.MonitoringErrorCodes["PERMISSION_ERROR"])
+		sensuutil.Exit("PERMISSIONERROR")
 	}
+	// fmt.Printf("s: %v\n",s)
+	// fmt.Printf("h: %v\n",h)
+	// fmt.Printf("numFD: %v\n",numFD)
 	return s, h, numFD
 }

@@ -120,7 +120,7 @@ default: all
 all: clean format vet build dist
 
 # Build a binary from the given package and drop it into the local bin
-build: # pre-build
+build: pre-build
 	  @export PATH=$$PATH:$$GOROOT/bin:$$GOBIN; \
 	  if [ -e ./cmd ]; then \
       godep go build -o ./bin/$(pkg) --ldflags "-linkmode external -extldflags '-static'"; \
@@ -188,6 +188,14 @@ lint:
 
 maintainer-clean:
 	@echo "this needs to be implemented"
+
+# create a directory to store binaries in
+pre-build:
+	echo "Creating proper build environment and dependency directory structure"; \
+	echo "Creating $$GOPATH/src/github.com/yieldbot/sensuplugin"; \
+	mkdir -p $$GOPATH/src/github.com/yieldbot/sensupluginfile; \
+	echo "Copying dependencies from $$(pwd) -> $$GOPATH/src/github.com/yieldbot/sensuplugin"; \
+	cp -R ./* $$GOPATH/src/github.com/yieldbot/sensupluginfile; \
 
 pre-dist:
 	@if [ -e ./cmd/ ]; then \

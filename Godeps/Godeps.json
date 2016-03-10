@@ -91,8 +91,8 @@
 		},
 		{
 			"ImportPath": "github.com/yieldbot/sensuplugin/sensuutil",
-			"Comment": "v1.0.0-101-ge2407b1",
-			"Rev": "e2407b10e193c38f1cc881b3b9ccbcd63e19838a"
+			"Comment": "v1.0.0-109-g5b086ce",
+			"Rev": "5b086cefcf65b9770c9938899acb8b38848b1c24"
 		},
 		{
 			"ImportPath": "gopkg.in/fsnotify.v1",

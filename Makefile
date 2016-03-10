@@ -11,11 +11,6 @@ SHELL = /bin/sh
 .SUFFIXES:
 .SUFFIXES: .go .texinfo
 
-# This will allow you to inject the version of the binary into the code at compile time.
-# You will need 'var version string' in the code for this to happen and then use '-X <pkg>.version=$(VER)' in your
-# build command.
-# VER := $(shell awk '{print $$2}' version)
-
 # Set the location for installing GNU info files
 # You can overwrite this by setting your build command to
 # `make infodir=path install`
@@ -23,14 +18,12 @@ ifndef infodir
 infodir = /usr/local/share/info
 endif
 
-# Set the package to build. To overwrite this use
-# `make pkg="diemon " build`
+# Set the package to build.
 ifndef pkg
 pkg := $(shell pwd | awk -F/ '{print $$NF}')
 endif
 
-# Set the path that the tarball will be dropped into. DrTeeth will look in
-# ./target by default but golang will put it into ./pkg if left to itself.
+# Set the path that the tarball will be dropped into.
 ifndef targetdir
 targetdir = pkg
 endif
@@ -43,10 +36,9 @@ endif
 define help
 --Targets--
 
-all: Attempt to run gofmt, golint, and go vet and if those pass then it will pull in the latest
-     dependencies and build the requested binaries. If the build completes without
-     errors a taball is created and dropped into the targetdir. This is the default Yieldbot target
-     for the golang build pipeline. Ex. `make all`
+all: Attempt to run gofmt and if it passes build any binaries or libraries. If the build completes 
+	   without errors a taball is created and dropped into the targetdir for a binary. This is
+	   the default Yieldbot target for the golang build pipeline. Ex. `make all`
 
 build: Run go build with a pre-defined set of options. By default a binary will be built
        for linux/amd64, named the same as the package, and any output will be placed
@@ -61,9 +53,9 @@ clean: Remove any files that are used or produced during the building and packag
 coverage: This needs to be implemented.
 
 dep_tree: This will call updatedeps first to pull in the latest dependencies. At this
-	        at this point it will remove any previous Godeps tree and replace it.
+	        point it will remove any previous Godeps tree and replace it.
 
-dist :Create a compressed tar archive of all binary produced during the build steps.
+dist: Create a compressed tar archive of all binary produced during the build steps.
       The tarball will be placed into the directory defined by the <targetdir> make
       variable. Ex. `make dist`
 
@@ -85,10 +77,10 @@ lint:  Run the golang linting tool. Ex. `make lint`
 
 maintainer_clean: This needs to be implemented.
 
-pre-build: Ensure that the necessary directories present. This does not need to be
+pre-build: Ensure that the necessary directories are present. This does not need to be
            called by the user.
 
-pre-dist: Ensure that the necessary directories present. This does not need to be
+pre-dist: Ensure that the necessary directories are present. This does not need to be
           called by the user.
 
 test: This needs to be implemented.
@@ -116,11 +108,11 @@ export help
 default: all
 
 # build and then create a tarball in the target directory
-# basically everything needed to put it into artifactory
-all: clean format vet build dist
+# basically everything needed to create a release.
+all: clean format build dist
 
 # Build a binary from the given package and drop it into the local bin
-build: pre-build
+build:
 	  @export PATH=$$PATH:$$GOROOT/bin:$$GOBIN; \
 	  if [ -e ./cmd ]; then \
       godep go build -o ./bin/$(pkg) --ldflags "-linkmode external -extldflags '-static'"; \
@@ -189,7 +181,7 @@ lint:
 maintainer-clean:
 	@echo "this needs to be implemented"
 
-# create a directory to store binaries in
+# needed for Jenkins builds due to shared Workspaces
 pre-build:
 	echo "Creating proper build environment and dependency directory structure"; \
 	echo "Creating $$GOPATH/src/github.com/yieldbot/sensuplugin"; \

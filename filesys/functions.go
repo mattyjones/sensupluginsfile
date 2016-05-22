@@ -11,13 +11,14 @@ package filesys
 
 import (
 	"fmt"
-	"github.com/yieldbot/sensuplugin/sensuutil"
 	"io/ioutil"
 	"os"
 	"os/exec"
 	"regexp"
 	"strconv"
 	"strings"
+
+	"github.com/yieldbot/sensuplugin/sensuutil"
 )
 
 //GetPid returns the pid for the desired process
@@ -36,7 +37,7 @@ func GetPid(app string) string {
 
 	out, err := psAEF.Output()
 	if err != nil {
-		sensuutil.EHndlr(err)
+		panic(err)
 	}
 
 	psAEF.Start()
@@ -81,7 +82,7 @@ func GetFileHandles(pid string) (float64, float64, float64) {
 
 	limits, err := ioutil.ReadFile(filename)
 	if err != nil {
-		sensuutil.EHndlr(err)
+		panic(err)
 	}
 
 	lines := strings.Split(string(limits), "\n")
@@ -93,13 +94,15 @@ func GetFileHandles(pid string) (float64, float64, float64) {
 
 			s, err = strconv.ParseFloat(_s, 64)
 			if err != nil {
-				sensuutil.EHndlr(err)
-				sensuutil.Exit("warning", "I can't parse the soft limit")
+				fmt.Println("warning", "I can't parse the soft limit")
+				panic(err)
+
 			}
 			h, err = strconv.ParseFloat(_h, 64)
 			if err != nil {
-				sensuutil.EHndlr(err)
-				sensuutil.Exit("warning", "I can't parse the hard limit")
+				fmt.Println("warning", "I can't parse the hard limit")
+				panic(err)
+
 			}
 		}
 	}

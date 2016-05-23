@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-package cmd
+package sensupluginsfile
 
 import (
 	"fmt"
@@ -42,7 +42,7 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
-	Run: func(cmd *cobra.Command, args []string) {},
+	Run: func(sensupluginsfile *cobra.Command, args []string) {},
 }
 
 // Execute adds all child commands to the root command sets flags appropriately.

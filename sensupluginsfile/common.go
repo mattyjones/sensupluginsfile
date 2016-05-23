@@ -7,7 +7,7 @@
 //   Released under the MIT License; see LICENSE
 //   for details.
 
-package cmd
+package sensupluginsfile
 
 import (
 	"fmt"

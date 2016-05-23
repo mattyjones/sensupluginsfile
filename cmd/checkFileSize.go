@@ -22,23 +22,23 @@ package cmd
 
 import (
 	"fmt"
-	"github.com/spf13/cobra"
-	"github.com/yieldbot/sensuplugin/sensuutil"
 	"os"
 	"path/filepath"
+
+	"github.com/spf13/cobra"
 )
 
 func testFile(f string) string {
 	file, err := os.Open(f)
 	if err != nil {
-		sensuutil.EHndlr(err)
+		panic(err)
 	}
 	defer file.Close()
 
 	// get the file size
 	stat, err := file.Stat()
 	if err != nil {
-		sensuutil.EHndlr(err)
+		panic(err)
 	}
 
 	fmt.Printf("The size of %v  is: %v\n", f, stat.Size())

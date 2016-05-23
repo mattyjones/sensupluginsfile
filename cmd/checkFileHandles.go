@@ -26,7 +26,6 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/spf13/nitro"
 	"github.com/yieldbot/sensuplugin/sensuutil"
-	"github.com/yieldbot/sensupluginfile/filesys"
 )
 
 var app string
@@ -35,13 +34,6 @@ var critThreshold int
 
 var timer *nitro.B
 var debug bool
-
-// Standalone tells the app not to error if an appPid is not found.
-var Standalone = true
-
-// JavaApp is used in determining the pid. The match needs to be done differently
-// for Java apps.
-var JavaApp = filesys.JavaApp
 
 func determineThreshold(limit float64, threshold float64, numFD float64) bool {
 	alarm := true
@@ -70,6 +62,9 @@ to quickly create a Cobra application.`,
 
 		var appPid string
 		var sLimit, hLimit, openFd float64
+
+		// Standalone tells the app not to error if an appPid is not found.
+		Standalone = true
 
 		// need to find a way to get the printf stuff into the sensu exit function
 		if app != "" {

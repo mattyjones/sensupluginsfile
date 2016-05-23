@@ -20,8 +20,8 @@
 
 package main
 
-import "github.com/yieldbot/sensupluginfile/filesys"
+import "github.com/yieldbot/sensupluginfile/cmd"
 
 func main() {
-	filesys.Execute()
+	cmd.Execute()
 }

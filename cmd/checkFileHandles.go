@@ -22,6 +22,7 @@ package cmd
 
 import (
 	"fmt"
+
 	"github.com/spf13/cobra"
 	"github.com/spf13/nitro"
 	"github.com/yieldbot/sensuplugin/sensuutil"
@@ -34,6 +35,9 @@ var critThreshold int
 
 var timer *nitro.B
 var debug bool
+
+// Standalone tells the app not to error if an appPid is not found.
+var Standalone = true
 
 // JavaApp is used in determining the pid. The match needs to be done differently
 // for Java apps.
@@ -69,8 +73,8 @@ to quickly create a Cobra application.`,
 
 		// need to find a way to get the printf stuff into the sensu exit function
 		if app != "" {
-			appPid = filesys.GetPid(app)
-			sLimit, hLimit, openFd = filesys.GetFileHandles(appPid)
+			appPid = GetPid(app)
+			sLimit, hLimit, openFd = GetFileHandles(appPid)
 			if debug {
 				fmt.Printf("warning threshold: %v percent, critical threshold: %v percent\n", warnThreshold, critThreshold)
 				fmt.Printf("this is the number of open files at the specific point in time: %v\n", openFd)

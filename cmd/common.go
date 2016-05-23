@@ -7,7 +7,7 @@
 //   Released under the MIT License; see LICENSE
 //   for details.
 
-package filesys
+package cmd
 
 import (
 	"fmt"
@@ -20,6 +20,15 @@ import (
 
 	"github.com/yieldbot/sensuplugin/sensuutil"
 )
+
+// JavaApp  This is used to let the process -> pid function know how it will match the process name
+var JavaApp bool
+
+// Standalone should be set to true if this is not being used externally.
+// When being used internally, if an appPid is not found then it will simply
+// raise a CONFIG_ERROR. If the GetPid function is used in other programs the
+// developer may wish to have an error message and seperate exit code.
+var Standalone bool
 
 //GetPid returns the pid for the desired process
 func GetPid(app string) string {
@@ -64,9 +73,13 @@ func GetPid(app string) string {
 		}
 	}
 	if appPid == "" {
-		fmt.Printf("No process with the name " + app + " exists.\n")
-		fmt.Printf("If unsure consult the documentation for examples and requirements\n")
-		os.Exit(sensuutil.MonitoringErrorCodes["CONFIG_ERROR"])
+		if Standalone {
+			fmt.Printf("No process with the name " + app + " exists.\n")
+			fmt.Printf("If unsure consult the documentation for examples and requirements\n")
+			os.Exit(sensuutil.MonitoringErrorCodes["CONFIG_ERROR"])
+		} else {
+			return ""
+		}
 	}
 	return appPid
 }

@@ -20,7 +20,7 @@
 
 package main
 
-import "github.com/yieldbot/sensupluginfile/sensupluginsfile"
+import "github.com/yieldbot/sensupluginsfile/sensupluginsfile"
 
 func main() {
 	sensupluginsfile.Execute()

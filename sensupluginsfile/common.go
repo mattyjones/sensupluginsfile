@@ -32,6 +32,8 @@ var Standalone bool
 
 //GetPid returns the pid for the desired process
 func GetPid(app string) string {
+	// RED the match is not working for non-java apps. If the string is not matched 100% it will fail.
+	JavaApp = true
 	pidExp := regexp.MustCompile("[0-9]+")
 	termExp := regexp.MustCompile(`pts/[0-9]`)
 	appPid := ""
@@ -65,11 +67,8 @@ func GetPid(app string) string {
 			}
 		}
 	} else {
-		fmt.Println("app: " + app)
 		for i := range lines {
-			fmt.Println("junk: " + lines[i])
 			if strings.Contains(lines[i], app) && !strings.Contains(lines[i], strconv.Itoa(goPid)) && !termExp.MatchString(lines[i]) {
-				fmt.Println("match: " + lines[i])
 				appPid = pidExp.FindString(lines[i])
 
 			}

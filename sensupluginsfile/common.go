@@ -65,8 +65,11 @@ func GetPid(app string) string {
 			}
 		}
 	} else {
+		fmt.Println("app: " + app)
 		for i := range lines {
+			fmt.Println("junk: " + lines[i])
 			if strings.Contains(lines[i], app) && !strings.Contains(lines[i], strconv.Itoa(goPid)) && !termExp.MatchString(lines[i]) {
+				fmt.Println("match: " + lines[i])
 				appPid = pidExp.FindString(lines[i])
 
 			}
@@ -74,9 +77,7 @@ func GetPid(app string) string {
 	}
 	if appPid == "" {
 		if Standalone {
-			fmt.Printf("No process with the name " + app + " exists.\n")
-			fmt.Printf("If unsure consult the documentation for examples and requirements\n")
-			os.Exit(sensuutil.MonitoringErrorCodes["CONFIG_ERROR"])
+			sensuutil.ConfigError()
 		} else {
 			return ""
 		}

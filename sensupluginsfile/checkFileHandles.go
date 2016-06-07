@@ -27,7 +27,7 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"github.com/yieldbot/sensuplugin/sensuutil"
-	"github.com/yieldbot/sensuplugin/version"
+	"github.com/yieldbot/sensupluginsfile/version"
 )
 
 // app the check the handles on

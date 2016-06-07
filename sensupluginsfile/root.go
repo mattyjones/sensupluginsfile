@@ -30,7 +30,7 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"github.com/yieldbot/sensuplugin/sensuutil"
-	"github.com/yieldbot/sensupluginsprocess/version"
+	"github.com/yieldbot/sensupluginsfile/version"
 )
 
 // Configuration via Viper

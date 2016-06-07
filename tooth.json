@@ -4,12 +4,12 @@
     "If nothing is there then nothing will be pushed back."
   ],
   "coordinates": {
-    "org": "sensupluginsprocess",
-    "name": "sensupluginsprocess",
+    "org": "sensupluginsfile",
+    "name": "sensupluginsfile",
     "type": "golang"
   },
   "build": [
-    "make pkg=sensupluginsprocess pre-build && make pkg=sensupluginsprocess all"
+    "make pkg=sensupluginsfile pre-build && make pkg=sensupluginsfile all"
   ],
   "bump": [
     "make version_bump"

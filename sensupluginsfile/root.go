@@ -30,7 +30,7 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"github.com/yieldbot/sensuplugin/sensuutil"
-	"github.com/yieldbot/sensupluginsfile/version"
+	//"github.com/yieldbot/sensupluginsfile/version"
 )
 
 // Configuration via Viper
@@ -45,7 +45,7 @@ var syslogLog = logrus.New()
 // RootCmd represents the base command when called without any subcommands
 var RootCmd = &cobra.Command{
 	Use:   "sensupluginfile",
-	Short: fmt.Sprintf("A set of file checks for Sensu - (%s)", version.AppVersion()),
+	//Short: fmt.Sprintf("A set of file checks for Sensu - (%s)", version.AppVersion()),
 	Long:  `A set of checks for verify the writablity, consistently, and readability of files`,
 }
 
@@ -78,7 +78,7 @@ func init() {
 		syslogLog.WithFields(logrus.Fields{
 			"check":   "sensupluginsfile",
 			"client":  "unknown",
-			"version": version.AppVersion(),
+			//"version": version.AppVersion(),
 			"error":   err,
 		}).Error(`Could not determine the hostname of this machine as reported by the kernel.`)
 		sensuutil.Exit("GENERALGOLANGERROR")

@@ -27,7 +27,7 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"github.com/yieldbot/sensuplugin/sensuutil"
-	"github.com/yieldbot/sensupluginsfile/version"
+	//"github.com/yieldbot/sensupluginsfile/version"
 )
 
 // app the check the handles on
@@ -97,7 +97,7 @@ var checkFileHandlesCmd = &cobra.Command{
 				syslogLog.WithFields(logrus.Fields{
 					"check":   "checkFileHandles",
 					"client":  host,
-					"version": version.AppVersion(),
+					//"version": version.AppVersion(),
 				}).Error(`You are missing a required configuration parameter. If unsure consult the documentation for examples and requirements`)
 				sensuutil.Exit("CONFIGERROR")
 			}

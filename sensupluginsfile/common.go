@@ -20,7 +20,7 @@ import (
 
 	"github.com/Sirupsen/logrus"
 	"github.com/yieldbot/sensuplugin/sensuutil"
-	"github.com/yieldbot/sensupluginsfile/version"
+	//"github.com/yieldbot/sensupluginsfile/version"
 )
 
 // JavaApp  This is used to let the process -> pid function know how it will match the process name
@@ -78,7 +78,7 @@ func GetPid(app string) string {
 			syslogLog.WithFields(logrus.Fields{
 				"check":   "checkFileHandles",
 				"client":  host,
-				"version": version.AppVersion(),
+				//"version": version.AppVersion(),
 			}).Error(`The configured process cannot be found. Did you spell it right?`)
 			sensuutil.Exit("CONFIGERROR")
 		} else {
